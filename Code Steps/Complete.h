@@ -122,14 +122,14 @@ int findRange()
   duration = pulseIn(echo, HIGH);
   
   //Calculate distance in centimeters
-  cm = microsecondsToCentimeters(duration);
+  cm = msToCm(duration);
   
   //Returns the value of the range. 
   return cm;   
 }
 
 //This function does the math to calculate the distance of the object in centimeters
-long microsecondsToCentimeters(long microseconds)
+long msToCm(long microseconds)
 {
   // The speed of sound is 340 m/s or 29 microseconds per centimeter.
   // The ping travels out and back, so to find the distance of the
