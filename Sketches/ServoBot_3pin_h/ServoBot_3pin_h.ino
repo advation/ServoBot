@@ -42,12 +42,6 @@ void setup()
   rightServo.attach(6);
   leftServo.attach(5);
 
-  //Set pin 8 as an output for the trigger to the sonic sensor.
-  pinMode(trigger, OUTPUT);
-  
-  //Set pin 10 as an input for the echo from the sonic sensor. 
-  pinMode(echo, INPUT);
-  
   //Sets pin 13 as an ouput for an indicator light. 
   pinMode(led, OUTPUT);
 }
@@ -111,6 +105,7 @@ int findRange()
   
   // The PING))) is triggered by a HIGH pulse of 2 or more microseconds.
   // Give a short LOW pulse beforehand to ensure a clean HIGH pulse:
+  pinMode(trigger, OUTPUT);
   digitalWrite(trigger, LOW);
   delayMicroseconds(2);
   digitalWrite(trigger, HIGH);
@@ -120,6 +115,7 @@ int findRange()
   // The same pin is used to read the signal from the PING))): a HIGH
   // pulse whose duration is the time (in microseconds) from the sending
   // of the ping to the reception of its echo off of an object.
+  pinMode(trigger, INPUT);
   duration = pulseIn(echo, HIGH);
   
   //Calculate distance in centimeters
