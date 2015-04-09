@@ -5,6 +5,9 @@
 Servo rightServo;
 Servo leftServo;
 
+//Assign variable for LED
+const int led = 13;
+
 //Assign variables for sonic sensor
 const int trigger = 8;
 const int echo = 10;
@@ -22,18 +25,11 @@ const int leftBackward = 0;
 
 const int brake = 90;
 
-//Assign varibles to count the number of revolutions.
-int revolutions = 0; 
-
-//Light sensor variables
-int ldr = 0;
-int ldrValue = 0; 
-int lightSensitivity = 25;
-
 //Assign variables for range detection
-//Objects within 10 centimetes will trigger the robot to do something. 
-int distance = 15; 
+//Objects within 25 centimetes will trigger the robot to do something. 
+int distance = 25; 
 
+//Random variable to be used for turning logic. 
 int r = 0;
 
 //Setup Loop
@@ -47,7 +43,10 @@ void setup()
   leftServo.attach(5);
 
   //Sets pin 13 as an ouput for an indicator light. 
-  pinMode(13, OUTPUT);
+  pinMode(led, OUTPUT);
+  
+  //Set pin 10 as an input for the echo from the sonic sensor. 
+  pinMode(echo, INPUT);
 }
 
 //Main Loop
@@ -59,6 +58,7 @@ void loop()
   //Print the detected range to the serial port for troubleshooting. 
   //Serial.println(range);
   
+  //Check the range value. If equal to 0 randomly generate a 1 or a 2 and assign that value to the r variable. 
   if(r == 0)
   {
     r = random(1,3);
@@ -68,36 +68,36 @@ void loop()
   if(range <= distance)
   {
     //Stop, pivot, and run! Zombies!!!
-    digitalWrite(13, HIGH);
-    //Serial.println("Avoid object!!");
-    //allStop();
-    //delay(250);
+    digitalWrite(led, HIGH);
+    Serial.print("Avoid object: ");
     
+    //Look at the r value and if it is equal to 1 go left or if it's equal to 2 go right. 
     if(r == 1)
     {
        left(); 
-       Serial.println("left");
+       Serial.println("Going Left!");
     }
     else if (r == 2)
     {
       right();
-      Serial.println("right");
+      Serial.println("Going Right!");
     }
-
-    delay(100);
   }
   else
   {
     //Toodaloo along, all is well.
-    digitalWrite(13,LOW);
-    //Serial.println("Forward!");
     forward();
+    Serial.println("Forward!");
+    
+    //Turns LED off.
+    digitalWrite(13,LOW);
+    
+    //Reset the r variable to 0;
     r = 0;
-    Serial.println(' ');
   } 
   
-  //Serial.print("Total Revolutions");
-  //Serial.println(revolutions);
+    //Small delay to give the robot time to move.
+    delay(75);
 }
 
 int findRange()
@@ -118,7 +118,6 @@ int findRange()
   // The same pin is used to read the signal from the PING))): a HIGH
   // pulse whose duration is the time (in microseconds) from the sending
   // of the ping to the reception of its echo off of an object.
-  pinMode(echo, INPUT);
   duration = pulseIn(echo, HIGH);
   
   //Calculate distance in centimeters
@@ -140,10 +139,6 @@ long microsecondsToCentimeters(long microseconds)
 //Moves the robot forward
 void forward()
 {
-   if(lightSensor())
-   {
-     plusCount();
-   }
    rightServo.write(rightForward);
    leftServo.write(leftForward);
 }
@@ -151,10 +146,6 @@ void forward()
 //Moves the robot backward
 void backward()
 {
-  if(lightSensor())
-   {
-     minusCount();
-   }
    rightServo.write(rightBackward);
    leftServo.write(leftBackward);
 }
@@ -179,33 +170,3 @@ void allStop()
    rightServo.write(brake);
    leftServo.write(brake);
 }
-
-//Adds one to the revolution count.
-int plusCount()
-{
-  return revolutions++;
-}
-
-//Subtracts one from the revolution count. 
-int minusCount()
-{
-  return revolutions--;
-}
-
-int lightSensor()
-{
-   //Analog read for ldr pin.
-   ldrValue = analogRead(ldr);
-   //Serial.println(ldrValue);
-   
-   //Logic
-   if(ldrValue <= lightSensitivity)
-   {
-     return true;
-   }
-   else
-   {
-     return false;
-   }
-}
-
