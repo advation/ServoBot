@@ -1,9 +1,8 @@
 const int irSensor = A0; 
-int distance = 0; 
 
 //Lower = farther away
 //Higher = closer
-const int target = 150;
+const int target = 250;
 
 void setup()
 {
@@ -20,19 +19,28 @@ void loop()
   {
     Serial.println("Forward");
   }
+  delay(100);
 }
 
 int range()
 {
+  int distance[3];
+  int average = 0;
+  
   //Sensor Smoothing
-  for(int i=0;i<=4;i++)
+  for(int i=0;i<=2;i++)
   {
-    distance = analogRead(irSensor);
-    delay(10);
-    distance = distance + distance;
+      distance[i] = analogRead(irSensor);
+      delay(10);
   }
   
-  distance = distance / 4;
-
-  return distance;
+  //Calculate the average
+  for(int a=0;a<=2;a++)
+  {
+     average = average + distance[a];   
+  }
+  
+  average = average / 3;
+  
+  return average;
 }
