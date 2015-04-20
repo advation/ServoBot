@@ -26,10 +26,6 @@ const int led = 3;
 const int irSensor = A0; 
 
 //Assign variables for range detections.
-/*
-The lower the number the farther away the object is.
-The higher the number the closer the object is. 
-*/
 const int target = 15;
 
 void setup()
