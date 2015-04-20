@@ -19,14 +19,11 @@ const int leftBackward = 0;
 
 const int brake = 90;
 
-//Assign variable for LED
-const int led = 3;
-
 //Assign variable for IR sensor
 const int irSensor = A0; 
 
 //Assign variables for range detections.
-const int target = 15;
+const int range = 15;
 
 void setup()
 {
@@ -36,9 +33,6 @@ void setup()
   //Assign pins to servo objects
   rightServo.attach(6);
   leftServo.attach(5);
-  
-  //Sets LED pin as an output for an indicator light.
-  pinMode(led, OUTPUT);
 }
 
 void loop()
@@ -47,21 +41,19 @@ void loop()
   /*
   Check the returned value of range() and compare it to the target variable.
   */
-  if(range() >= target)
+  if(getRange() >= range)
   {
-     digitalWrite(led, HIGH);
      right();
   }
   else
   {
-    digitalWrite(led, LOW);
     forward();
   }
   delay(100);
 }
 
 //Uses the IR sensor and returns a value representing the range of the object. 
-int range()
+int getRange()
 {
   //Read the input on analog pin 0
   int sensorValue = analogRead(irSensor);
