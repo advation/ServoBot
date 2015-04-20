@@ -30,7 +30,7 @@ const int irSensor = A0;
 The lower the number the farther away the object is.
 The higher the number the closer the object is. 
 */
-const int target = 250;
+const int target = 15;
 
 void setup()
 {
