@@ -67,25 +67,18 @@ void loop()
 //Uses the IR sensor and returns a value representing the range of the object. 
 int range()
 {
-  int distance[3];
-  int average = 0;
+  //Read the input on analog pin 0
+  int sensorValue = analogRead(irSensor);
+
+  //Calculate the distance in centimeters
+  float distance = 5262.1/sensorValue;
+
+  //Print the calculated distance.
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
   
-  //Sensor Smoothing
-  for(int i=0;i<=2;i++)
-  {
-      distance[i] = analogRead(irSensor);
-      delay(10);
-  }
-  
-  //Calculate the average
-  for(int a=0;a<=2;a++)
-  {
-     average = average + distance[a];   
-  }
-  
-  average = average / 3;
-  
-  return average;
+  return distance;
 }
 
 void forward()
