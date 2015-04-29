@@ -19,6 +19,9 @@ int range = 15;
 
 void setup()
 {
+///////////////////// NEW CODE /////////////////////////
+	Serial.begin(9600);
+////////////////////////////////////////////////////////
 	rightServo.attach(6);
 	leftServo.attach(5);
 }
@@ -31,7 +34,7 @@ void loop()
 	backward();
 	delay(2000);
 
-	left()
+	left();
 	delay(2000);
 
 	right();

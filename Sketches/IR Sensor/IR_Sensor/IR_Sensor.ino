@@ -41,7 +41,7 @@ void loop()
   /*
   Check the returned value of range() and compare it to the target variable.
   */
-  if(getRange() >= range)
+  if(getRange() <= range)
   {
      right();
   }

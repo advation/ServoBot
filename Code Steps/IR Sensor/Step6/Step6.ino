@@ -11,36 +11,40 @@ const int leftBackward = 0;
 
 const int brake = 90;
 
-const int trigger = 8;
-const init echo = 10;
-
-const int trigger = 8;
-const init echo = 10;
+///////////////////// NEW CODE /////////////////////////
+const int irSensor = A0;
 
 int range = 15;
+////////////////////////////////////////////////////////
 
 void setup()
 {
+///////////////////// NEW CODE /////////////////////////
+	Serial.begin(9600);
+////////////////////////////////////////////////////////
 	rightServo.attach(6);
 	leftServo.attach(5);
 }
 
 void loop()
 {
-///////////////////// NEW CODE /////////////////////////
-	if(getRange() >= range)
-	{
-		right();
-	}
-	else
-	{
-		forward();
-	}
-	delay(100);
+	forward();
+	delay(2000);
 
-/////////////////////////////////////////////////////////
+	backward();
+	delay(2000);
+
+	left();
+	delay(2000);
+
+	right();
+	delay(2000);
+
+	allStop();
+	delay(2000);
 }
 
+///////////////////// NEW CODE /////////////////////////
 int getRange()
 {
   int sensorValue = analogRead(irSensor);
@@ -53,6 +57,7 @@ int getRange()
   
   return distance;
 }
+/////////////////////////////////////////////////////////
 
 void forward()
 {	
