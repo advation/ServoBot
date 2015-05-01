@@ -20,14 +20,13 @@ const int leftBackward = 0;
 const int brake = 90;
 
 //Assign variable for IR sensor
-const int irSensor = A0; 
+const int irSensor = 0;
+
+//Distance on either side of the robot
+int leftDistance, rightDistance;
 
 //Assign variables for range detections.
 const int range = 15;
-
-//Current Turn Direction bit
-int holdTurn = 0; 
-turns[]
 
 void setup()
 {
@@ -45,15 +44,75 @@ void loop()
   /*
   Check the returned value of range() and compare it to the target variable.
   */
-  if(getRange() <= range)
-  {
-     right();
+  if(getRange() >= range)
+  {  
+     //Move forard
+     forward();
   }
   else
   {
-    forward();
+     //Stop ServoBot
+     allStop();
+     delay(100);
+     
+     //Turn left for a little
+     left();
+     delay(250);
+     
+     //Stop
+     allStop();
+     delay(250);
+     
+     //Check left distance
+     leftDistance = getRange();
+     delay(50);
+     
+     //Turn right for a little
+     right();
+     delay(250);
+     
+     //Stop
+     allStop();
+     delay(250);
+     
+     //Check right distance
+     rightDistance = getRange();
+     delay(50);
+     
+     //Turn left to go back to center
+     left();
+     delay(250);
+     
+     //Stop
+     allStop();
+     delay(250);
+     
+     //Compare the 2 distances
+     compareDistance();
   }
   delay(100);
+}
+
+void compareDistance()
+{
+  if(leftDistance > rightDistance)
+  {
+      Serial.println("Going left!");
+      left();
+      delay(100);
+  }
+  else if(rightDistance > leftDistance)
+  {
+     Serial.println("Going right!");
+     right();
+     delay(100);
+  }
+  else
+  {
+     //turn 180 degrees
+     left();
+     delay(250); 
+  }
 }
 
 //Uses the IR sensor and returns a value representing the range of the object. 
