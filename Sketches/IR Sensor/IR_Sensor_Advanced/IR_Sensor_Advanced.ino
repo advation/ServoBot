@@ -53,7 +53,7 @@ void loop()
   {
      //Stop ServoBot
      allStop();
-     delay(100);
+     delay(25);
      
      //Turn left for a little
      left();
@@ -61,36 +61,36 @@ void loop()
      
      //Stop
      allStop();
-     delay(250);
+     delay(10);
      
      //Check left distance
      leftDistance = getRange();
-     delay(50);
+     delay(25);
      
      //Turn right for a little
      right();
-     delay(250);
+     delay(500);
      
      //Stop
      allStop();
-     delay(250);
+     delay(25);
      
      //Check right distance
      rightDistance = getRange();
-     delay(50);
+     delay(25);
      
      //Turn left to go back to center
      left();
      delay(250);
      
      //Stop
-     allStop();
-     delay(250);
+     allStop();.;p0
+     delay(10);
      
      //Compare the 2 distances
      compareDistance();
   }
-  delay(100);
+  delay(10);
 }
 
 void compareDistance()
@@ -110,8 +110,10 @@ void compareDistance()
   else
   {
      //turn 180 degrees
+     backwards();
+     delay(500);
      left();
-     delay(250); 
+     delay(2000);
   }
 }
 
@@ -137,6 +139,13 @@ void forward()
   rightServo.write(rightForward);
   leftServo.write(leftForward);
   Serial.println("Forward");
+}
+
+void backwards()
+{
+  rightServo.write(rightBackward);
+  leftServo.write(leftBackward);
+  Serial.println("Backward");
 }
 
 void left()
