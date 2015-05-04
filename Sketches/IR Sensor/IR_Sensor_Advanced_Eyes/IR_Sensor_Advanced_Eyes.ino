@@ -20,9 +20,9 @@ const int leftBackward = 0;
 
 const int brake = 90;
 
-const int eyesLeft = 0;
-const int eyesRight = 180;
-const int eyesForward = 0; 
+const int eyesLeft = 120;
+const int eyesRight = 40;
+const int eyesForward = 85;
 
 //Assign variable for IR sensor
 const int irSensor = 0;
@@ -61,21 +61,24 @@ void loop()
   {
      //Stop ServoBot
      allStop();
-     delay(25);
+     delay(100);
      
      //Turn left for a little
      lookLeft();
      
      //Check left distance
      leftDistance = getRange();
-     delay(25);
+     delay(100);
      
      //Turn right for a little
      lookRight();
     
      //Check right distance
      rightDistance = getRange();
-     delay(25);
+     delay(100);
+     
+     eyes.write(eyesForward);
+     delay(100);
      
      //Compare the 2 distances
      compareDistance();
@@ -89,21 +92,21 @@ void compareDistance()
   {
       Serial.println("Going left!");
       left();
-      delay(100);
+      delay(300);
   }
   else if(rightDistance > leftDistance)
   {
      Serial.println("Going right!");
      right();
-     delay(100);
+     delay(300);
   }
   else
   {
      //turn 180 degrees
      backwards();
-     delay(500);
+     delay(250);
      left();
-     delay(2000);
+     delay(1000);
   }
 }
 
@@ -127,15 +130,13 @@ int getRange()
 void lookLeft()
 {
    eyes.write(eyesLeft);
-   delay(250);
-   eyes.write(eyesForward); 
+   delay(500);
 }
 
 void lookRight()
 {
    eyes.write(eyesRight);
-   delay(250);
-   eyes.write(eyesForward); 
+   delay(500);
 }
 
 void forward()
