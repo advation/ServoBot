@@ -12,7 +12,7 @@ const int leftBackward = 0;
 const int brake = 90;
 
 ///////////////////// NEW CODE /////////////////////////
-const int irSensor = A0;
+const int irSensor = 0;
 
 int range = 15;
 ////////////////////////////////////////////////////////
