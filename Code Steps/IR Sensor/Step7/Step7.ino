@@ -26,7 +26,7 @@ void loop()
 {
 ///////////////////// NEW CODE /////////////////////////
 	
-	if(getRange() >= range)
+	if(getRange() <= range)
 	{
 		right();
 	}
