@@ -84,7 +84,7 @@ void loop()
      delay(250);
      
      //Stop
-     allStop();.;p0
+     allStop();
      delay(10);
      
      //Compare the 2 distances
